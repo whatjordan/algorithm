@@ -1,9 +1,10 @@
 package com.jordan.datastructure.adt;
 
 import java.lang.reflect.Array;
+import java.util.Iterator;
 
-public class ArrayADT <T>{
-	private T[] array = null;
+public class ArrayADT <T> implements Iterable<T>{
+	protected T[] array = null;
 	private Class<?> clazz;
 	private int length;
 	public ArrayADT(Class<?> clazz, int length) {
@@ -19,6 +20,7 @@ public class ArrayADT <T>{
 			throw new NullPointerException(" ArrayADT's array can't not be null");
 		}
 		this.array = array;
+		this.length = array.length;
 		clazz = array.getClass().getComponentType();
 	}
 
@@ -69,13 +71,16 @@ public class ArrayADT <T>{
 	}
 	
 	public int length(){
-		return array.length;
+		return length;
 	}
 	
 	public T get(int index){
 		return array[index];
 	}
 	
+	public void replace(int index, T element) {
+		array[index] = element;
+	}
 	
 	public boolean isExist(T element){
 		for(int i = 0; i < array.length ; i ++){
@@ -93,6 +98,25 @@ public class ArrayADT <T>{
 
 	public void setArray(T[] array) {
 		this.array = array;
+	}
+
+	@Override
+	public Iterator<T> iterator() {
+		return new arrayADTIterator() ;
+	}
+	
+	private class arrayADTIterator implements Iterator<T>{
+		private int index = 0;
+		@Override
+		public boolean hasNext() {
+			return index < length;
+		}
+
+		@Override
+		public T next() {
+			return get(index++);
+		}
+		
 	}
 
 }
