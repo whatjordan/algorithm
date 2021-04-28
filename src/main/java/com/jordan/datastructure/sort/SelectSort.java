@@ -1,4 +1,4 @@
-package com.jordan.datastructure;
+package com.jordan.datastructure.sort;
 
 import java.util.Comparator;
 
