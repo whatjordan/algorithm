@@ -2,11 +2,11 @@ package com.jordan.datastructure.adt;
 
 public class AbstractLink {
 
-    public static class Node {
+    public static class Node<T> {
         public Node next;
-        public Object value;
+        public T value;
 
-        public Node(Node next, Object value) {
+        public Node(Node next, T value) {
             this.next = next;
             this.value = value;
         }
@@ -15,7 +15,7 @@ public class AbstractLink {
             this.next = next;
         }
 
-        public void setValue(Object value) {
+        public void setValue(T value) {
             this.value = value;
         }
 

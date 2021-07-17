@@ -1,6 +1,7 @@
 package com.jordan.datastructure.search;
 
-import com.jordan.datastructure.sort.FixedArrayBubbleSort;
+import com.jordan.datastructure.sort.Sort;
+import com.jordan.datastructure.sort.SortFactory;
 
 import java.util.Arrays;
 
@@ -29,7 +30,8 @@ public class Search {
         for (int i = 0; i < array.length; i++) {
             wrapperArray[i] = new WrapperElement<>(array[i], i);
         }
-        WrapperElement[] sortedArray = FixedArrayBubbleSort.sort(wrapperArray, Comparable::compareTo);
+        Sort<WrapperElement> sort = SortFactory.getSort(SortFactory.SortType.SIMPLE_SELECT);
+        WrapperElement[] sortedArray = sort.sort(wrapperArray, Comparable::compareTo);
         int high = array.length - 1;
         int low = 0;
         while (high >= low) {
@@ -54,7 +56,8 @@ public class Search {
         for (int i = 0; i < array.length; i++) {
             wrapperNumberArray[i] = new WrapperNumber<>(array[i], i);
         }
-        WrapperNumber[] sortedArray = FixedArrayBubbleSort.sort(wrapperNumberArray, Comparable::compareTo);
+        Sort<WrapperNumber> sort = SortFactory.getSort(SortFactory.SortType.SIMPLE_SELECT);
+        WrapperNumber[] sortedArray = sort.sort(wrapperNumberArray, Comparable::compareTo);
         int high = sortedArray.length - 1;
         int low = 0;
         while (high >= low) {
@@ -83,7 +86,8 @@ public class Search {
         for (int i = 0; i < array.length; i++) {
             wrapperArray[i] = new WrapperElement<>(array[i], i);
         }
-        FixedArrayBubbleSort.sort(wrapperArray, Comparable::compareTo);
+        Sort<WrapperElement> sort = SortFactory.getSort(SortFactory.SortType.SIMPLE_SELECT);
+        sort.sort(wrapperArray, Comparable::compareTo);
         int low = 1, high = array.length, mid, k = 0;
         while (array.length > getFibonacci(k)) {
             k++;

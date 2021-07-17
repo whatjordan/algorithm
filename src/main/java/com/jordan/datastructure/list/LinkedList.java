@@ -1,13 +1,13 @@
 package com.jordan.datastructure.list;
 
-public class LinkedList extends AbstractLinkedList {
+public class LinkedList<T> extends AbstractLinkedList<T> {
     protected Node header;
 
     public LinkedList() {
         this.header = new Node(null, null);
     }
 
-    public void add(Object ele){
+    public void add(T ele){
         insert(size(), ele);
     }
 
@@ -23,7 +23,7 @@ public class LinkedList extends AbstractLinkedList {
     }
 
     @Override
-    public void insert(int index, Object ele) {
+    public void insert(int index, T ele) {
         if (index < 0 || index > size()) {
             throw new IndexOutOfBoundsException();
         }
@@ -60,12 +60,12 @@ public class LinkedList extends AbstractLinkedList {
     }
 
     @Override
-    public Object get(int index) {
+    public T get(int index) {
         int size = size();
         if (index < 0 || index >= size) {
             throw new IndexOutOfBoundsException();
         }
-        Node cur = header;
+        Node<T> cur = header;
         for (int i = 0; i <= index; i++) {
             cur = cur.next;
         }

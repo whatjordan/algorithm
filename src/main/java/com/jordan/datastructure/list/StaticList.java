@@ -2,7 +2,7 @@ package com.jordan.datastructure.list;
 
 import com.jordan.datastructure.adt.ListADT;
 
-public class StaticList implements ListADT {
+public class StaticList<T> implements ListADT<T> {
     private int length;
 
     /**
@@ -11,7 +11,7 @@ public class StaticList implements ListADT {
      * <p>
      * arr[maxSize -1] is the rear, and it's cur point to the begin of a link.
      */
-    private Node[] arr;
+    private Node<T>[] arr;
 
     public StaticList() {
         this(1000);
@@ -78,7 +78,7 @@ public class StaticList implements ListADT {
     }
 
     @Override
-    public Object get(int index) {
+    public T get(int index) {
         int size = size();
         if (index < 0 || index >= size) {
             throw new IndexOutOfBoundsException();
@@ -142,11 +142,11 @@ public class StaticList implements ListADT {
         return length;
     }
 
-    private static class Node {
+    private static class Node<T> {
         private int next;
-        private Object value;
+        private T value;
 
-        public Node(int cur, Object value) {
+        public Node(int cur, T value) {
             this.next = cur;
             this.value = value;
         }

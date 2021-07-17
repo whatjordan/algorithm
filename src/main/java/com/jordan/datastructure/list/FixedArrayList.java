@@ -107,9 +107,9 @@ public class FixedArrayList<T> implements Iterable<T>, ListADT<T> {
         return false;
     }
 
-
+    @Override
     public T[] getArray() {
-        T[] copy = (T[]) new Object[array.length];
+        T[] copy = (T[]) Array.newInstance(clazz, array.length);
         System.arraycopy(array, 0, copy, 0, array.length);
         return copy;
     }

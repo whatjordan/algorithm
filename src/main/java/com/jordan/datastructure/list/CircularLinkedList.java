@@ -1,8 +1,8 @@
 package com.jordan.datastructure.list;
 
-public class CircularLinkedList extends AbstractLinkedList {
+public class CircularLinkedList<T> extends AbstractLinkedList<T> {
 
-    private Node rear;
+    private Node<T> rear;
 
     public CircularLinkedList() {
         rear = new Node(null, null);
@@ -13,12 +13,12 @@ public class CircularLinkedList extends AbstractLinkedList {
     }
 
     @Override
-    public Object get(int index) {
+    public T get(int index) {
         int size = size();
         if (index < 0 || index >= size) {
             throw new IndexOutOfBoundsException();
         }
-        Node cur = rear.next; // get last
+        Node<T> cur = rear.next; // get last
         for (int i = 0; i <= index; i++) {
             cur = cur.next;
         }

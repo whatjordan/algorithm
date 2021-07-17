@@ -10,4 +10,5 @@ public class StringTest {
         Assert.assertEquals(-1, ExhaustedMatch.indexOf("abcba", "bac"));
         Assert.assertEquals(1, ExhaustedMatch.indexOf("abcba", "bcb"));
     }
+
 }
