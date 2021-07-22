@@ -15,12 +15,16 @@ public class SortFactory {
                 return new HeapSort<>();
             case RECURSIVE_MERGING:
                 return new RecursiveMergingSort<>();
+            case LOOP_MERGING:
+                return new LoopMergingSort<>();
+            case QUICK:
+                return new QuickSort<>();
         }
         throw new IllegalArgumentException("Can't found " + sortType);
     }
 
     public enum SortType {
-        BUBBLE, SIMPLE_SELECT, STRAIGHT_INSERTION, SHELL, HEAP, RECURSIVE_MERGING
+        BUBBLE, SIMPLE_SELECT, STRAIGHT_INSERTION, SHELL, HEAP, RECURSIVE_MERGING, LOOP_MERGING, QUICK
     }
 
 }

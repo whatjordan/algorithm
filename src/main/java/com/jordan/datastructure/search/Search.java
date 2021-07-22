@@ -30,7 +30,7 @@ public class Search {
         for (int i = 0; i < array.length; i++) {
             wrapperArray[i] = new WrapperElement<>(array[i], i);
         }
-        Sort<WrapperElement> sort = SortFactory.getSort(SortFactory.SortType.SIMPLE_SELECT);
+        Sort<WrapperElement> sort = SortFactory.getSort(SortFactory.SortType.QUICK);
         WrapperElement[] sortedArray = sort.sort(wrapperArray, Comparable::compareTo);
         int high = array.length - 1;
         int low = 0;
@@ -56,7 +56,7 @@ public class Search {
         for (int i = 0; i < array.length; i++) {
             wrapperNumberArray[i] = new WrapperNumber<>(array[i], i);
         }
-        Sort<WrapperNumber> sort = SortFactory.getSort(SortFactory.SortType.SIMPLE_SELECT);
+        Sort<WrapperNumber> sort = SortFactory.getSort(SortFactory.SortType.QUICK);
         WrapperNumber[] sortedArray = sort.sort(wrapperNumberArray, Comparable::compareTo);
         int high = sortedArray.length - 1;
         int low = 0;
@@ -86,7 +86,7 @@ public class Search {
         for (int i = 0; i < array.length; i++) {
             wrapperArray[i] = new WrapperElement<>(array[i], i);
         }
-        Sort<WrapperElement> sort = SortFactory.getSort(SortFactory.SortType.SIMPLE_SELECT);
+        Sort<WrapperElement> sort = SortFactory.getSort(SortFactory.SortType.QUICK);
         sort.sort(wrapperArray, Comparable::compareTo);
         int low = 1, high = array.length, mid, k = 0;
         while (array.length > getFibonacci(k)) {
