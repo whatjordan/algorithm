@@ -6,6 +6,31 @@ import com.jordan.datastructure.sort.SortFactory;
 import java.util.Arrays;
 
 public class Search {
+
+    public static <T> int sentinelLinearSearch(T[] elements, T key) {
+        if (elements == null || elements.length == 0) {
+            return -1;
+        }
+        T lastEle = elements[elements.length - 1];
+        elements[elements.length - 1] = key;
+        int index = 0;
+        while (true) {
+            if (elements[index].equals(key)) {
+                elements[elements.length - 1] = lastEle;
+                if (index == elements.length - 1) {
+                    if (lastEle.equals(key)) {
+                        return index;
+                    } else {
+                        return -1;
+                    }
+                } else {
+                    return index;
+                }
+            }
+            index++;
+        }
+    }
+
     public static int sequentialSearchWithSentinel(Object[] array, Object key) {
         if (array == null || array.length == 0) {
             return -1;

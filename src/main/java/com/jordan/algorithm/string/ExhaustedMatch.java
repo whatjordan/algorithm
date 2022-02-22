@@ -1,4 +1,4 @@
-package com.jordan.datastructure.string;
+package com.jordan.algorithm.string;
 
 public class ExhaustedMatch {
 
@@ -7,6 +7,7 @@ public class ExhaustedMatch {
             return -1;
         }
         int i = 0;
+        // i-j is for backing the index i to the begin matching place
         while (str.length() - i >= pattern.length()) {
             for (int j = 0; j < pattern.length(); j++) {
                 if (str.charAt(i) == pattern.charAt(j)) {

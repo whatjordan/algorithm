@@ -5,12 +5,12 @@ import com.jordan.datastructure.adt.QueueADT;
 
 public class LinkedQueue extends AbstractLink implements QueueADT {
 
-    private Node rear;
-    private Node front;
+    private LinkedNode rear;
+    private LinkedNode front;
 
     public LinkedQueue() {
-        rear = new Node(null, null);
-        front = new Node(null, null);
+        rear = new LinkedNode(null, null);
+        front = new LinkedNode(null, null);
     }
 
     @Override
@@ -20,14 +20,14 @@ public class LinkedQueue extends AbstractLink implements QueueADT {
 
     @Override
     public void enQueue(Object ele) {
-        Node node = new Node(null, ele);
+        LinkedNode linkedNode = new LinkedNode(null, ele);
         if (rear.next != null) {
-            rear.next.next = node;
+            rear.next.next = linkedNode;
         }
         if (front.next == null) {
-            front.next = node;
+            front.next = linkedNode;
         }
-        rear.next = node;
+        rear.next = linkedNode;
     }
 
     @Override
@@ -35,7 +35,7 @@ public class LinkedQueue extends AbstractLink implements QueueADT {
         if (front.next == null) {
             throw new IndexOutOfBoundsException();
         }
-        Node cur = front.next;
+        LinkedNode cur = front.next;
         front.next = cur.next;
         if (cur == rear.next) {
             rear.next = front.next;
@@ -46,7 +46,7 @@ public class LinkedQueue extends AbstractLink implements QueueADT {
     @Override
     public int size() {
         int count = 0;
-        Node cur = front;
+        LinkedNode cur = front;
         while (cur.next != null) {
             count++;
             cur = cur.next;
@@ -56,10 +56,10 @@ public class LinkedQueue extends AbstractLink implements QueueADT {
 
     @Override
     public void clear() {
-        Node cur = front;
+        LinkedNode cur = front;
         while (cur != null) {
             cur.value = null;
-            Node tmp = cur;
+            LinkedNode tmp = cur;
             cur = cur.next;
             tmp.next = null;
         }

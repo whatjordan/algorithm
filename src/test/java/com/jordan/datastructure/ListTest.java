@@ -3,6 +3,7 @@ package com.jordan.datastructure;
 
 import com.jordan.datastructure.list.CircularLinkedList;
 import com.jordan.datastructure.list.LinkedList;
+import com.jordan.datastructure.list.SimpleLinkedList;
 import com.jordan.datastructure.list.StaticList;
 import org.junit.Assert;
 import org.junit.Test;
@@ -43,29 +44,31 @@ public class ListTest {
     }
 
     @Test
-    public void testLinkedList() {
-        LinkedList linkedList = new LinkedList();
-        linkedList.add(1);
-        linkedList.add(2);
-        linkedList.add(3);
-        linkedList.insert(3, 4);
-        Assert.assertArrayEquals(new Integer[]{1, 2, 3, 4}, linkedList.getArray());
-        linkedList.clear();
-        Assert.assertEquals(0, linkedList.size());
-        linkedList.add(5);
-        Assert.assertEquals(5, linkedList.get(0));
+    public void testSimpleLinkedList() {
+        SimpleLinkedList simpleLinkedList = new SimpleLinkedList();
+        simpleLinkedList.add(1);
+        simpleLinkedList.add(2);
+        simpleLinkedList.add(3);
+        simpleLinkedList.insert(3, 4);
+        Assert.assertArrayEquals(new Integer[]{1, 2, 3, 4}, simpleLinkedList.getArray());
+        simpleLinkedList.clear();
+        Assert.assertEquals(0, simpleLinkedList.size());
+        simpleLinkedList.add(5);
+        Assert.assertEquals(5, simpleLinkedList.get(0));
     }
 
-    private void printCircularLinkedList(CircularLinkedList circularLinkedList) {
-        CircularLinkedList.Node first = circularLinkedList.getFirst();
-        CircularLinkedList.Node nodeCur = circularLinkedList.getFirst();
-        System.out.println("============");
-        do {
-            if (nodeCur == null) {
-                return;
-            }
-            System.out.println(nodeCur.getValue());
-            nodeCur = nodeCur.getNext();
-        } while (nodeCur != first);
+    @Test
+    public void testLinkedList() {
+        LinkedList list = new LinkedList();
+        list.add(1);
+        list.add(2);
+        list.add(3);
+        list.insert(3, 4);
+        Assert.assertArrayEquals(new Integer[]{1, 2, 3, 4}, list.getArray());
+        list.clear();
+        Assert.assertEquals(0, list.size());
+        list.add(5);
+        Assert.assertEquals(5, list.get(0));
     }
+
 }

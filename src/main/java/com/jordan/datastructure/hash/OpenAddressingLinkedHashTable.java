@@ -1,15 +1,15 @@
 package com.jordan.datastructure.hash;
 
-import com.jordan.datastructure.list.LinkedList;
+import com.jordan.datastructure.list.SimpleLinkedList;
 
 public class OpenAddressingLinkedHashTable<T, V> {
 
-    private LinkedList<Entry<T, V>>[] buckets;
+    private SimpleLinkedList<Entry<T, V>>[] buckets;
     private int capacity;
 
     //TODO auto scaling by load factor
     public OpenAddressingLinkedHashTable(int capacity) {
-        buckets = new LinkedList[capacity];
+        buckets = new SimpleLinkedList[capacity];
         this.capacity = capacity;
     }
 
@@ -27,7 +27,7 @@ public class OpenAddressingLinkedHashTable<T, V> {
         }
         int address = getAddress(key);
         if (buckets[address] == null) {
-            buckets[address] = new LinkedList<>();
+            buckets[address] = new SimpleLinkedList<>();
             buckets[address].add(new Entry<>(key, value));
         } else {
             for (int i = 0; i < buckets[address].size(); i++) {
@@ -55,10 +55,10 @@ public class OpenAddressingLinkedHashTable<T, V> {
     }
 
     public boolean containsValue(V value) {
-        for (int i = 0; i < buckets.length; i++) {
-            if (buckets[i] != null) {
-                for (int linkIndex = 0; linkIndex < buckets[i].size(); linkIndex++) {
-                    if (buckets[i].get(linkIndex).getValue().equals(value)) {
+        for (SimpleLinkedList<Entry<T, V>> bucket : buckets) {
+            if (bucket != null) {
+                for (int linkIndex = 0; linkIndex < bucket.size(); linkIndex++) {
+                    if (bucket.get(linkIndex).getValue().equals(value)) {
                         return true;
                     }
                 }
@@ -69,9 +69,9 @@ public class OpenAddressingLinkedHashTable<T, V> {
 
     public int size() {
         int count = 0;
-        for (int i = 0; i < buckets.length; i++) {
-            if(buckets[i] != null){
-                count += buckets[i].size();
+        for (SimpleLinkedList<Entry<T, V>> bucket : buckets) {
+            if (bucket != null) {
+                count += bucket.size();
             }
         }
         return count;

@@ -4,85 +4,92 @@ import com.jordan.datastructure.adt.ListADT;
 
 import java.lang.reflect.Array;
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 public class FixedArrayList<T> implements Iterable<T>, ListADT<T> {
     protected T[] array = null;
     private Class<?> clazz;
-    private int length;
+    private int DEFAULT_CAPACITY = 50;
+    private int size;
 
-    public FixedArrayList(Class<?> clazz, int length) {
+    public FixedArrayList(Class<?> clazz, int capacity) {
         if (null == clazz) {
             throw new IllegalArgumentException("Clazz can't not be null");
         }
         this.clazz = clazz;
-        this.length = length;
-        array = (T[]) Array.newInstance(clazz, array.length);
+        this.size = 0;
+        array = (T[]) Array.newInstance(clazz, capacity);
     }
 
     public FixedArrayList(T[] array) {
         if (null == array) {
             throw new IllegalArgumentException("Initial array can't not be null");
         }
-        this.array = array;
-        this.length = array.length;
-        clazz = array.getClass().getComponentType();
+        this.clazz = array.getClass().getComponentType();
+        this.size = array.length;
+        this.array = copyArray(array, array.length);
+    }
+
+    private void ensureCapacity(int capacity) {
+        if (capacity <= size) {
+            return;
+        }
+        this.array = copyArray(this.array, capacity);
+    }
+
+    private void trimToSize() {
+        ensureCapacity(size);
     }
 
     @Override
     public void clear() {
-        for (int i = 0; i < length; i++) {
+        for (int i = 0; i < size; i++) {
             array[i] = null;
         }
-        array = (T[]) Array.newInstance(clazz, array.length);
+        this.size = 0;
+        this.array = (T[]) Array.newInstance(clazz, DEFAULT_CAPACITY);
     }
 
-    /**
-     * @param index
-     * @param ele
-     */
+    public void add(T ele) {
+        insert(size, ele);
+    }
+
     @Override
     public void insert(int index, T ele) {
-        if (index >= array.length || index < 0) {
+        if (index > size || index < 0) {
             throw new IndexOutOfBoundsException();
         }
-
-        @SuppressWarnings("unchecked") final T[] newArray = (T[]) Array.newInstance(clazz, array.length + 1);
-        for (int i = 0; i < index; i++) {
-            newArray[i] = array[i];
+        if (size == array.length) {
+            ensureCapacity(array.length * 2 + 1);
         }
-        newArray[index] = ele;
-        for (int i = index; i < array.length; i++) {
-            newArray[i + 1] = array[i];
+        for (int i = size; i > index; i--) {
+            array[i] = array[i - 1];
         }
-        this.array = newArray;
+        array[index] = ele;
+        size++;
     }
 
     @Override
     public void delete(int index) {
-        if (index >= array.length || index < 0) {
+        if (index >= size || index < 0) {
             throw new IndexOutOfBoundsException();
         }
-
-        @SuppressWarnings("unchecked")
-        T[] newArray = (T[]) Array.newInstance(clazz, array.length - 1);
-        for (int i = 0; i < index; i++) {
-            newArray[i] = array[i];
+        for (int i = index; i < size - 1; i++) {
+            array[i] = array[i + 1];
         }
-
-        for (int i = index + 1; i < array.length; i++) {
-            newArray[i - 1] = array[i];
-        }
-        this.array = newArray;
-
+        size--;
     }
 
     @Override
     public int size() {
-        return length;
+        return size;
     }
 
     @Override
     public T get(int index) {
+        if (index >= size || index < 0) {
+            throw new IndexOutOfBoundsException();
+        }
         return array[index];
     }
 
@@ -92,14 +99,14 @@ public class FixedArrayList<T> implements Iterable<T>, ListADT<T> {
     }
 
     public void replace(int index, T element) {
-        if (index >= array.length || index < 0) {
+        if (index >= size || index < 0) {
             throw new IndexOutOfBoundsException();
         }
         array[index] = element;
     }
 
     public boolean contains(T element) {
-        for (int i = 0; i < array.length; i++) {
+        for (int i = 0; i < size; i++) {
             if (array[i] != null && array[i].equals(element)) {
                 return true;
             }
@@ -109,30 +116,49 @@ public class FixedArrayList<T> implements Iterable<T>, ListADT<T> {
 
     @Override
     public T[] getArray() {
-        T[] copy = (T[]) Array.newInstance(clazz, array.length);
-        System.arraycopy(array, 0, copy, 0, array.length);
+        @SuppressWarnings("unchecked")
+        T[] copy = (T[]) Array.newInstance(clazz, size);
+        for (int i = 0; i < size; i++) {
+            copy[i] = array[i];
+        }
         return copy;
     }
 
 
-    @Override
-    public Iterator<T> iterator() {
-        return new arrayADTIterator();
+    private T[] copyArray(T[] array, int newCapacity) {
+        @SuppressWarnings("unchecked")
+        T[] copy = (T[]) Array.newInstance(clazz, newCapacity);
+        for (int i = 0; i < array.length; i++) {
+            copy[i] = array[i];
+        }
+        return copy;
     }
 
-    private class arrayADTIterator implements Iterator<T> {
+    @Override
+    public Iterator<T> iterator() {
+        return new ArrayAdtIterator();
+    }
+
+    private class ArrayAdtIterator implements Iterator<T> {
         private int index = 0;
 
         @Override
         public boolean hasNext() {
-            return index < length;
+            return index < size;
         }
 
         @Override
         public T next() {
+            if (!hasNext()) {
+                throw new NoSuchElementException();
+            }
             return get(index++);
         }
 
+        @Override
+        public void remove() {
+            delete(--index);
+        }
     }
 
 }

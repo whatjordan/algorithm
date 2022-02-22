@@ -1,4 +1,4 @@
-package com.jordan.datastructure.search;
+package com.jordan.datastructure.tree;
 
 import java.util.Objects;
 import java.util.Optional;

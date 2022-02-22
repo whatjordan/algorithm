@@ -5,28 +5,32 @@ import com.jordan.datastructure.adt.StackADT;
 
 public class LinkedStack extends AbstractLink implements StackADT {
 
-    private Node top;
+    private LinkedNode top;
+
+    private int size = 0;
 
     public LinkedStack() {
-        top = new Node(null, null);
+        top = new LinkedNode(null, null);
     }
 
     @Override
     public void push(Object value) {
-        Node node = new Node(null, value);
+        LinkedNode linkedNode = new LinkedNode(null, value);
         if (top.next != null) {
-            node.next = top.next;
+            linkedNode.next = top.next;
         }
-        top.next = node;
+        top.next = linkedNode;
+        size++;
     }
 
     @Override
     public Object pop() {
-        Node cur = top.next;
+        LinkedNode cur = top.next;
         if (cur == null) {
             throw new IndexOutOfBoundsException();
         }
         top.next = cur.next;
+        size--;
         return cur.value;
     }
 
@@ -45,24 +49,19 @@ public class LinkedStack extends AbstractLink implements StackADT {
 
     @Override
     public int size() {
-        int count = 0;
-        Node cur = top.next;
-        while (cur != null) {
-            count++;
-            cur = cur.next;
-        }
-        return count;
+        return size;
     }
 
     @Override
     public void clear() {
-        Node cur = top;
+        LinkedNode cur = top;
         while (cur != null) {
             cur.value = null;
-            Node tmp = cur;
+            LinkedNode tmp = cur;
             cur = cur.next;
             tmp.next = null;
         }
+        size = 0;
     }
 
 

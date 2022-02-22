@@ -2,10 +2,10 @@ package com.jordan.datastructure.list;
 
 public class CircularLinkedList<T> extends AbstractLinkedList<T> {
 
-    private Node<T> rear;
+    private LinkedNode<T> rear;
 
     public CircularLinkedList() {
-        rear = new Node(null, null);
+        rear = new LinkedNode(null, null);
     }
 
     public void add(Object value) {
@@ -18,7 +18,7 @@ public class CircularLinkedList<T> extends AbstractLinkedList<T> {
         if (index < 0 || index >= size) {
             throw new IndexOutOfBoundsException();
         }
-        Node<T> cur = rear.next; // get last
+        LinkedNode<T> cur = rear.next; // get last
         for (int i = 0; i <= index; i++) {
             cur = cur.next;
         }
@@ -27,19 +27,19 @@ public class CircularLinkedList<T> extends AbstractLinkedList<T> {
 
     @Override
     public void clear() {
-        Node first = getFirst();
-        Node nodeCur = getFirst();
+        LinkedNode first = getFirst();
+        LinkedNode linkedNodeCur = getFirst();
         do {
-            Node previous = nodeCur;
-            nodeCur = nodeCur.getNext();
+            LinkedNode previous = linkedNodeCur;
+            linkedNodeCur = linkedNodeCur.getNext();
             previous.setNext(null);
             previous.setValue(null);
-            if (nodeCur != first) {
+            if (linkedNodeCur != first) {
                 break;
             }
         } while (true);
         rear.setNext(null);
-        rear = new Node(null, null);
+        rear = new LinkedNode(null, null);
     }
 
     @Override
@@ -48,19 +48,19 @@ public class CircularLinkedList<T> extends AbstractLinkedList<T> {
         if (index < 0 || index > size) {
             throw new IndexOutOfBoundsException();
         }
-        Node node = new Node(null, ele);
+        LinkedNode linkedNode = new LinkedNode(null, ele);
         if (rear.next == null) {
-            node.next = node;
-            rear.next = node;
+            linkedNode.next = linkedNode;
+            rear.next = linkedNode;
         }
-        Node previous = rear;
+        LinkedNode previous = rear;
         for (int i = 0; i <= index; i++) {
             previous = previous.next;
         }
-        node.next = previous.next; //
-        previous.next = node;
+        linkedNode.next = previous.next; //
+        previous.next = linkedNode;
         if(size == index){
-            rear.next = node;
+            rear.next = linkedNode;
         }
     }
 
@@ -70,11 +70,11 @@ public class CircularLinkedList<T> extends AbstractLinkedList<T> {
         if (index < 0 || index >= size) {
             throw new IndexOutOfBoundsException();
         }
-        Node prior = getLast(); // find the prior of target
+        LinkedNode prior = getLast(); // find the prior of target
         for (int i = 0; i < index; i++) {
             prior = prior.next;
         }
-        Node target = prior.next;
+        LinkedNode target = prior.next;
         target.value = null;
         if (prior == target) {
             rear.next = null;
@@ -92,8 +92,8 @@ public class CircularLinkedList<T> extends AbstractLinkedList<T> {
             return 0;
         }
         int count = 0;
-        Node first = getFirst();
-        Node cur = getFirst();
+        LinkedNode first = getFirst();
+        LinkedNode cur = getFirst();
         do {
             count++;
             cur = cur.next;
@@ -101,18 +101,18 @@ public class CircularLinkedList<T> extends AbstractLinkedList<T> {
         return count;
     }
 
-    public Node getFirst() {
+    public LinkedNode getFirst() {
         if (rear.next == null) {
             return null;
         }
         return rear.next.next;
     }
 
-    public Node getLast() {
+    public LinkedNode getLast() {
         return rear.next;
     }
 
-    private Node getRear() {
+    private LinkedNode getRear() {
         return rear;
     }
 
@@ -120,13 +120,25 @@ public class CircularLinkedList<T> extends AbstractLinkedList<T> {
         if (linkedList.getLast() == null || getLast() == null) {
             return;
         }
-        Node selfFirst = getFirst();
-        Node selfLast = getLast();
-        Node targetFirst = linkedList.getFirst();
-        Node targetLast = linkedList.getLast();
+        LinkedNode selfFirst = getFirst();
+        LinkedNode selfLast = getLast();
+        LinkedNode targetFirst = linkedList.getFirst();
+        LinkedNode targetLast = linkedList.getLast();
         selfLast.next = targetFirst;
         targetLast.next = selfFirst;
         rear = linkedList.getRear();
+    }
+
+    private void print(CircularLinkedList circularLinkedList) {
+        LinkedNode first = circularLinkedList.getFirst();
+        LinkedNode linkedNodeCur = circularLinkedList.getFirst();
+        do {
+            if (linkedNodeCur == null) {
+                return;
+            }
+            System.out.println(linkedNodeCur.getValue());
+            linkedNodeCur = linkedNodeCur.getNext();
+        } while (linkedNodeCur != first);
     }
 
 }

@@ -54,11 +54,7 @@ public class ArrayStack implements StackADT {
 
     @Override
     public int size() {
-        int count = 0;
-        for (int i = 0; i <= topIndex; i++) {
-            count++;
-        }
-        return count;
+        return topIndex + 1;
     }
 
     @Override

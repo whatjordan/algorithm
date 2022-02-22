@@ -7,11 +7,12 @@ public class ArrayQueue implements QueueADT {
     private int maxSize;
     private Object[] arr;
     private int frontIndex;
+    // point to the next empty place
     private int rearIndex;
 
 
     public ArrayQueue(int capacity) {
-        //Check if a queue is full: (rearIndex+1) % maxQueue == frontIndex
+        // +1 for distinguishing if the array is empty.
         this.maxSize = capacity + 1;
         arr = new Object[this.maxSize];
     }
@@ -23,6 +24,7 @@ public class ArrayQueue implements QueueADT {
 
     @Override
     public void enQueue(Object ele) {
+        //Check if a queue is full: (rearIndex+1) % maxQueue == frontIndex
         if ((rearIndex + 1) % maxSize == frontIndex) {
             throw new IndexOutOfBoundsException();
         }

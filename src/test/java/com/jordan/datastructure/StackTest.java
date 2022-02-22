@@ -18,6 +18,7 @@ public class StackTest {
         stackADT.push(1);
         stackADT.push(2);
         stackADT.push(3);
+        Assert.assertEquals(3, stackADT.size());
     }
 
     @Test(expected = IndexOutOfBoundsException.class)

@@ -33,7 +33,7 @@ public class QuickSort<T> extends Sort<T> {
         while (start < end) {
             int pivot = getPivotAndBetterPartiallySort(array, comparator, start, end);
             betterRecursiveSort(array, comparator, start, pivot - 1);
-            // Resetting the start index and iterating the pivot and the 'betterRecursiveSort' method
+            // By setting the start index to pivot + 1, and iterating the pivot. The 'betterRecursiveSort' method
             // are the same of recursively sorting the right part of the array.
             start = pivot + 1;
         }

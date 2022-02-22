@@ -1,11 +1,20 @@
 package com.jordan.datastructure;
 
-import com.jordan.datastructure.search.BinarySearchTree;
+import com.jordan.datastructure.tree.BinarySearchTree;
 import com.jordan.datastructure.search.Search;
 import org.junit.Assert;
 import org.junit.Test;
 
 public class SearchTest {
+
+    @Test
+    public void testSentinelLinearSearch() {
+        final Integer[] elements = new Integer[]{1, 5, 3};
+        Assert.assertEquals(2, Search.sentinelLinearSearch(elements, 3));
+        Assert.assertEquals(0, Search.sentinelLinearSearch(elements, 1));
+        Assert.assertEquals(-1, Search.sentinelLinearSearch(elements, 0));
+    }
+
     @Test
     public void testSequentialSearchWithSentinel() {
         Integer[] array = new Integer[]{1, 2, 3, 4, 5};
